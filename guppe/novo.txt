@@ -1,0 +1,3 @@
+Teste de escrita de arquivos em python
+Podemos colocar quantas linhas quisermos
+Esta é a última linha

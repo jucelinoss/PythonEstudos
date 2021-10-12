@@ -1,0 +1,105 @@
+Listar versões de dependencias
+# Comando
+# pip freeze > requirements.txt
+
+instalação do django
+>pip install django==2.2.4
+
+Criação de projeto sem criar subpasta
+django-admin startproject [nome_projeto] .
+
+O comando cria:
+ - pasta com nome do projeto (bin)
+    - __init__.py   - transforma um diretório em um pacote python
+    - settings.py   - configurações do projeto django
+    - urls.py       - arquivo de rotas
+    - wsgi.py
+ - arquivo manage.py
+
+TEMPLATES - configuração de modelos de apresentação (camada de visualização)
+WSGI - padrão de aplicações python para web
+Django usa sqlite3 como default (built-in do django)
+
+Comando de criação de uma aplicação
+django-admin startapp [nome_app]
+
+pasta migration - armazena configurações versionamento de banco de dados
+views.py - contém as funções chamadas nas rotas para abrir os templates de visualização
+
+para cada app criado, é necessário informar o nome do app dentro do arquivo settings.py, na configuração INSTALLED_APPS
+
+TEMPLATES - armazena as configurações de template de arquivos HTML
+
+Comandos de gerenciamento de projetos django devem ser executados no mesmo diretorio do arquivo manage.py
+
+Ativar servidor web
+python manage.py runserver
+
+Alterações em arquivos .py são aplicadas automaticamente no servidor, bastando recarregar a página web.
+
+As views ficam contidas nas pastas de aplicação, não de projeto
+Um projeto pode conter várias aplicações, que podem ser levadas para outro projetos de forma simples
+Quando o modo debug está desativado, o python busca pela funcao index do arquivo views.py
+
+Arquivo views.py
+def index(request):
+    return render(request, 'index.html')
+
+def contato(request):
+    return render(request, 'contato.html')
+
+é necessário criar uma rota para vincular a chamada de uma funcao do arquivo views.py com o endereço da página
+
+Arquivo urls.py
+ usado para realizar a configuração das rotas
+ não é recomendado usar o arquivo urls.py para mapear todas as rotas do projeto
+ recomenda-se utilizar o arquivo urls.py da pasta de cada aplicação
+
+Exemplo
+ # configuração de rotas
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', include('core.urls')),
+    # inclui as rotas da aplicação core
+]
+
+Model
+Classes modelo, geralmente associadas a banco de dados
+
+Migrations
+permite versionar modelos de tabelas de Banco de Dados, de todos os projetos configurados em INSTALLED_APPS (arquivo settings.py)
+
+Comandos:
+    python manage.py makemigrations
+    python manage.py migrate
+
+Criação de usuário admin
+> python manage.py createsuperuser
+
+[aplicação]/admin.py
+- permite configurar os modelos
+jucelino - toor
+
+Opções de comando de um arquivo
+> python manage.py
+lista todas as opções do comando
+
+python manage.py help [comando]
+fornece ajuda para a opção desejada
+Exemplo
+python manage.py help migrate
+python manage.py help makemigrations
+
+Django Shell
+permite realizar operacoes CRUD via shell, entre outras tarefas
+
+> python manage.py shell
+inicia o console shell do python
+from core.views import index
+
+produto = Produto(nome="Atari 2600", preco=199.67, estoque=100)
+produto.save()
+
+from core.models import Cliente
+cliente = Cliente(nome='Angelina', sobrenome='Jolie', email='angelina@gmail.com')
+
